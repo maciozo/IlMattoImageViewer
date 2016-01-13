@@ -1,18 +1,9 @@
 #!/usr/bin/env python
 
-__author__ = "Maciej Romański"
-__copyright__ = "Copyright 2016, Maciej Romański"
-__credits__ = ["Maciej Romański", "Steve Gunn"]
-__license__ = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International"
-__version__ = "0.1"
-__maintainer__ = "Maciej Romański"
-__status__ = "Production"
-
-
 from PIL import Image
 import time
 
-mode = 1
+mode = 2
 #0 = 30x40x16   (RGB565, greyscale)
 #1 = 48x64x8    (RGB332, greyscale)
 #2 = 60x80x4    (RGB121, greyscale)
@@ -29,6 +20,7 @@ im = Image.open("image.bmp")
 if rotateAngle:
     im = im.rotate(rotateAngle)
     
+# x and y are the dimensions of each image pixel in terms of actual pixels on the LCD.
 if (mode == 0):
     width = 30
     height = 40
@@ -324,7 +316,7 @@ def mode1g():
         with open("output.c", "a") as file:
             file.write(mode1gstr.replace("!BMP_DATA!", str(pixelGrid).replace("[", "{").replace("]", "}").replace("'", "")))
             
-def mode2():
+def mode2(): # 2 Pixels per uint_8t
     pixel = 0;
     pixel1 = 0b11110000; #4 bits per pixel in 8 bit integer
     # print(pixels)
@@ -339,12 +331,12 @@ def mode2():
             rgb = (red | green | blue)
             
             if (col % 2 == 0):
-                pixel1 = rgb << 4
+                pixel1 = rgb << 4 #First of 2 pixels, move to front of uint_8t
             else:
-                pixel = pixel1 | rgb
+                pixel = pixel1 | rgb #Last of 2 pixels, place in last 4 bits of uint_8t
+                pixelGrid[col][row / 2] = hex(pixel)
             
-
-    for item in pixelGrid:
+for item in pixelGrid:
         open("output.c", "w")
         with open("output.c", "a") as file:
             file.write(mode2str.replace("!BMP_DATA!", str(pixelGrid).replace("[", "{").replace("]", "}").replace("'", "")))
