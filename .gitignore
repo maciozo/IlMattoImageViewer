@@ -1,0 +1,7 @@
+run.bat
+output.c
+lcdlib/
+lcd.h
+liblcd.a
+image.bmp
+readmepic.jpg
