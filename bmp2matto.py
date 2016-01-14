@@ -327,7 +327,6 @@ def mode2(): # 2 Pixels per uint_8t
             b = (int(rgb[2]) & 0b10000000) >> 7
             rgb = (r | g | b)
             
-<<<<<<< HEAD
             pixelGrid[col][row] = hex(rgb)
             pixel += 1
                 
@@ -349,7 +348,6 @@ def mode2(): # 2 Pixels per uint_8t
             open("output.c", "w")
             with open("output.c", "a") as file:
                 file.write(mode2str.replace("!BMP_DATA!", str(squishedGrid).replace("[", "{").replace("]", "}").replace("'", "")))
-=======
             if (col % 2 == 0):
                 pixel1 = rgb << 4 #First of 2 pixels, move to front of uint_8t
             else:
@@ -360,7 +358,6 @@ for item in pixelGrid:
         open("output.c", "w")
         with open("output.c", "a") as file:
             file.write(mode2str.replace("!BMP_DATA!", str(pixelGrid).replace("[", "{").replace("]", "}").replace("'", "")))
->>>>>>> 7f005e9d632af4127ab12a3c7d0fe74efa426ba0
             
 if (mode == 0 and not greyscale):
     mode0()
