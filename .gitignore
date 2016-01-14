@@ -6,3 +6,5 @@ liblcd.a
 image.bmp
 readmepic.jpg
 .gitignore
+output.elf
+output.hex
